@@ -60,9 +60,11 @@ void main() {
   vec3 bPos = fract(cPos);
   vec3 tiledCpos = fract(cPos*0.0625);
 
-  // 0-255 = first 4 bits for y, remaining for x
-  float uvx16 = a_texcoord1.x * 15.9375; // 255/16
-  vec2 uv1 = vec2(fract(uvx16), floor(uvx16)*0.0625); // (a&15, a>>4)
+// lightmap fix 1.21.130
+  uvec2 _6d79f = uvec2(round(a_texcoord1 * 65535.0));
+    uvec2 _5e4ed = _6d79f;
+   vec2 uv1 = vec2(uvec2(_5e4ed.y >> 4u, _5e4ed.y) & uvec2(15u,15u)) * vec2_splat(0.066666670143604278564453125);
+  
 
   vec2 lit = uv1*uv1;
 
