@@ -60,12 +60,12 @@ void main() {
   vec3 bPos = fract(cPos);
   vec3 tiledCpos = fract(cPos*0.0625);
 
-// lightmap fix 1.21.130
-  uvec2 _6d79f = uvec2(round(a_texcoord1 * 65535.0));
-    uvec2 _5e4ed = _6d79f;
-   vec2 uv1 = vec2(uvec2(_5e4ed.y >> 4u, _5e4ed.y) & uvec2(15u,15u)) * vec2_splat(0.066666670143604278564453125);
-  
-
+  // bit 16 for dithering / mask tint
+  // bits 15-9 for ??
+  // bits 8-5 for x, bits 4-1 for y
+  // uvec2 a16 = uvec2(round(a_texcoord1 * 65535.0));
+  // vec2 uv1 = vec2(uvec2(a16.y >> 4u, a16.y) & uvec2(15u)) * vec2(0.06666667);
+  vec2 uv1 = fract(a_texcoord1.y*vec2(256.0, 4096.0));
   vec2 lit = uv1*uv1;
 
   bool isColored = color.r != color.g || color.r != color.b;
