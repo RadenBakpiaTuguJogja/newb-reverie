@@ -87,7 +87,7 @@ vec4 renderCloudsRounded(
     d.y = mix(d.y, pos.y, m);
     pos += deltaP;
   }
-  d.x *= smoothstep(0.03, 0.1, d.x);
+  d.x *= smoothstep(1.5, 3.0, d.x);
   d.x /= (stepsf/density) + d.x;
 
   if (vPos.y < 0.0) { // view from top
@@ -100,12 +100,22 @@ vec4 renderCloudsRounded(
   return col;
 }
 
-float cloudsNoiseVr(vec2 p, float t) {
-  float n = fastVoronoi2(p + t, 1.8);
-  n *= fastVoronoi2(3.0*p + t, 1.5);
-  n *= fastVoronoi2(9.0*p + t, 0.4);
-  n *= fastVoronoi2(27.0*p + t, 0.1);
-  //n *= fastVoronoi2(82.0*pos + t, 0.02); // more quality
+// realistic clouds
+float cloudsNoiseVr(vec2 pos, float t) {
+  float n = fastVoronoi2(2.5*pos + t, 0.8);
+  n *= fastVoronoi2(4.0*pos + t, 1.0);
+  n *= fastVoronoi2(12.0*pos + t, 0.3);
+  n *= fastVoronoi2(27.0*pos + t, 0.1);
+  n *= fastVoronoi2(81.0*pos + t, 0.03);
+  return n*n;
+}
+
+float cloudsNoiseVr2(vec2 pos, float t) {
+  float n = fastVoronoi2(2.5*pos + t, 1.0);
+  n *= fastVoronoi2(4.0*pos + t, 1.0);
+  n *= fastVoronoi2(12.0*pos + t, 0.3);
+  n *= fastVoronoi2(27.0*pos + t, 0.1);
+  n *= fastVoronoi2(81.0*pos + t, 0.03);
   return n*n;
 }
 

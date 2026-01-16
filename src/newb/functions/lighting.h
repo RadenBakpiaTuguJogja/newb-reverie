@@ -69,9 +69,9 @@ vec3 nlLighting(
     sunLightAttenuation *= 1.0-0.4*env.rainFactor;
 
     // shadow cast by sun light
-    float shadow = step(0.93, uv1.y);
-    shadow = max(shadow, (1.0 - NL_SHADOW_INTENSITY + (0.6*NL_SHADOW_INTENSITY*nightIntensity))*lit.y);
-    shadow *= shade > 0.8 ? 1.0 : 0.8;
+    float shadow = step(0.97, uv1.y);
+    shadow = max(shadow, (0.7 - 0.5*NL_SHADOW_INTENSITY + (0.3*NL_SHADOW_INTENSITY*nightFactor))*lit.y);
+    shadow *= shade > 0.8 ? 1.0 : 0.9;
     #ifdef NL_CLOUD_SHADOW
       // shadow cast by simple clouds
       vec3 mainLightDir = env.sunDir.y > 0.0 ? env.sunDir : env.moonDir;
