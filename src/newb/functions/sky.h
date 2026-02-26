@@ -86,7 +86,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   vec2 g2 = g1*g1;
   vec2 g4 = g2*g2;
   vec2 g8 = g4*g4;
-  float mg8 = (g8.x+g8.y)*mask*(1.0-0.9*env.rainFactor);
+  float mg8 = (g8.x+g8.y)*mask*(0.6-0.9*env.rainFactor);
 
   float vh = 1.0 - viewDir.y*viewDir.y;
   float vh2 = vh*vh;
@@ -145,7 +145,7 @@ vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
   g *= g;
 
   vec3 sky = mix(zenithCol, horizonCol, f*f);
-  sky += (0.1*streaks + 2.0*g*g*g + h*h*h)*vec3(0.5,0.0,2.0);
+  sky += (0.1*streaks + 2.0*g*g*g + h*h*h)*vec3(2.5,0.8,0.0);
   sky += 0.25*streaks*spectrum(sin(2.0*viewDir.x*viewDir.y+t));
 
   return sky;
